@@ -18,6 +18,25 @@ def get_currency_by_figi(figi: str) -> str:
     raise ValueError(f"No currency with FIGI {figi}")
 
 
+def get_exchange_rate(currency: str, token: str) -> float:
+    if currency == "USD":
+        figi = "BBG0013HGFT4"
+    elif currency == "EUR":
+        figi = "BBG0013HJJ31"
+    else:
+        raise ValueError(f"No currency {currency}")
+
+    response = requests.get(f"{API_URL}market/orderbook",
+                            headers={"Authorization": f"Bearer {token}"},
+                            params={"figi": figi,
+                                    "depth": 1}
+                           )
+    print(response.content)
+
+    usd_rub_orderbook = json.loads(response.content)["payload"]
+    return usd_rub_orderbook["lastPrice"]
+
+
 def fix_iso_format(iso: str) -> str:
     if "." not in iso:
         return iso
