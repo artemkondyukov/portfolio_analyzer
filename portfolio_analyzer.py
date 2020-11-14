@@ -1,5 +1,4 @@
 import altair as alt
-from datetime import datetime
 import pandas as pd
 import streamlit as st
 
@@ -13,7 +12,7 @@ USD_RUB = get_exchange_rate("USD", TOKEN)
 
 p = Portfolio([Currency(currency="USD", balance=0.),
                Currency(currency="RUB", balance=0.)],
-              [], datetime(2020, 1, 1))
+              [])
 
 operations = get_operations(ACCOUNT_ID, TOKEN)
 

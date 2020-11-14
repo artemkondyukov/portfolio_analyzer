@@ -66,7 +66,7 @@ class Position:
 
 
 class Portfolio:
-    def __init__(self, currencies, positions, date):
+    def __init__(self, currencies, positions):
         self.currencies = currencies
         self.positions = positions
 
