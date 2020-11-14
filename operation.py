@@ -6,7 +6,6 @@ import requests
 
 from portfolio import Position, Portfolio
 
-
 API_URL = "https://api-invest.tinkoff.ru/openapi/"
 
 
@@ -30,8 +29,7 @@ def get_exchange_rate(currency: str, token: str) -> float:
                             headers={"Authorization": f"Bearer {token}"},
                             params={"figi": figi,
                                     "depth": 1}
-                           )
-    print(response.content)
+                            )
 
     usd_rub_orderbook = json.loads(response.content)["payload"]
     return usd_rub_orderbook["lastPrice"]
@@ -40,7 +38,6 @@ def get_exchange_rate(currency: str, token: str) -> float:
 def fix_iso_format(iso: str) -> str:
     if "." not in iso:
         return iso
-    print(iso)
     before_dot, after_dot = iso.split(".")
     before_plus, after_plus = after_dot.split("+")
     if len(before_plus) not in [3, 6]:
@@ -112,7 +109,6 @@ class BuySellAsset(Operation):
                f"Quantity: {self.quantity_executed} \n"
 
     def perform(self, portfolio: Portfolio) -> Portfolio:
-        print(self.__repr__())
         result = deepcopy(portfolio)
 
         for currency in result.currencies:
@@ -167,7 +163,6 @@ def get_operations(account_id: int, token: str) -> list:
                             )
     operations = []
     for operation in json.loads(response.content)["payload"]["operations"][::-1]:
-        print(operation)
         operation_type = operation["operationType"]
         operation = OperationFactory.create_operation(operation_type=operation_type, **operation)
         operations.append(operation)
