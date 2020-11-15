@@ -3,7 +3,8 @@ import pandas as pd
 import streamlit as st
 
 from operation import get_operations, get_exchange_rate
-from portfolio import Currency, Portfolio, get_account_id
+from portfolio import Currency, Portfolio, get_account_id, get_portfolio
+from calculate_yield import calculate_yield
 
 
 ACCOUNT_ID = get_account_id()
@@ -41,3 +42,13 @@ chart = alt.Chart(source).mark_area().encode(
 
 st.write(source)
 st.write(chart)
+
+my_portfolio = get_portfolio(ACCOUNT_ID)
+my_assets_USD = sum([position.balance * position.price for position in my_portfolio.positions])
+my_assets_RUB = USD_RUB * my_assets_USD
+my_USD = [currency.balance for currency in my_portfolio.currencies if currency.currency == "USD"][0]
+my_RUB = [currency.balance for currency in my_portfolio.currencies if currency.currency == "RUB"][0]
+my_final_amount = my_assets_RUB + my_USD * USD_RUB + my_RUB
+
+st.write("YEARLY RATE")
+st.write(calculate_yield(get_operations(ACCOUNT_ID, TOKEN), my_final_amount))
