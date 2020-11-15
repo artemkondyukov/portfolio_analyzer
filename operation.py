@@ -69,6 +69,10 @@ class CashFlow(Operation):
         return result
 
 
+class PayIn(CashFlow):
+    pass
+
+
 class BuySellCurrency(Operation):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
@@ -140,6 +144,8 @@ class OperationFactory:
     @staticmethod
     def create_operation(operation_type, **kwargs):
         if operation_type in ["PayIn", "Coupon", "PartRepayment", "BrokerCommission", "Dividend"]:
+            if operation_type == "PayIn":
+                return PayIn(**kwargs)
             return CashFlow(**kwargs)
         elif operation_type in ["Sell", "Buy"]:
             if kwargs.get("instrumentType") == "Currency":

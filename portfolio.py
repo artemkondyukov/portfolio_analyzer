@@ -46,11 +46,10 @@ class Currency:
 
 class Position:
     def __init__(self, **kwargs):
-        print(kwargs)
         self.figi = kwargs["figi"]
         self.currency = kwargs.get("currency") or\
             kwargs["averagePositionPrice"]["currency"]
-        self.type = kwargs["type"]
+        self.type = kwargs.get("type") or kwargs.get("instrumentType")
         self.balance = kwargs["balance"]
         self.ticker = kwargs.get("ticker", None) or get_ticker_by_figi(self.figi)
         self.sector = kwargs.get("sector", None) or get_sector(self.ticker)
