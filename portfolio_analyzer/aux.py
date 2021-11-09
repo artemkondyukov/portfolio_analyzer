@@ -24,5 +24,5 @@ def calculate_yield(amounts, days, current_amount):
     opt_daily_percentage = minimize(loss_function, np.array([1.]),
                                     method='Powell', options={'xtol': 1e-30, 'ftol': 1e-30})
     # find an annual percentage yield
-    APY = -1. + np.power(opt_daily_percentage.x, 365)
-    return APY[0]
+    annual_percentage_yield = -1. + np.power(opt_daily_percentage.x, 365)
+    return annual_percentage_yield[0]
