@@ -35,4 +35,3 @@ def calculate_yield(amounts, days, current_amount):
     # find an annual percentage yield
     annual_percentage_yield = -1. + rate[0] ** 365
     return annual_percentage_yield
-
