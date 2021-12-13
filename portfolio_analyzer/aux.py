@@ -1,8 +1,9 @@
 import numpy as np
 import pandas as pd
+from typing import Union, List
 
 
-def calculate_yield(amounts, days, current_amount):
+def calculate_yield(amounts: List[float], days: List[int], current_amount: float) -> float:
     """
       Calculates annual percentage yield (APY) of an investor using the info about their PIA pay-ins.
 
